@@ -23,12 +23,11 @@ class DataValidMonitor:
         datas: named handles to be sampled when transaction occurs
     """
 
-    def __init__(self, clk, data, valid, error=None):
+    def __init__(self, clk, data, valid):
         self.values = Queue()
         self._clk = clk
         self._data = data
         self._valid = valid
-        self._error = error
         self._coro = None
 
     def start(self) -> None:
@@ -49,8 +48,5 @@ class DataValidMonitor:
             await RisingEdge(self._clk)
             if self._valid.value.binstr != "1":
                 await RisingEdge(self._valid)
-                continue
-            if self._error != None and self._error != "0":
-                await FallingEdge(self._error)
                 continue
             self.values.put_nowait(self._data)
