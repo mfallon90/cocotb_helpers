@@ -20,6 +20,7 @@ class RgmiiDriver():
     async def send_frame(self, frame):
         for byte in frame:
             await self.send_byte(byte)
+        await cocotb.triggers.FallingEdge(self.clk)
         self.data.value = 0
         self.ctl.value = 0
 
