@@ -22,7 +22,7 @@ class EtherFrame():
         data_pkt = random.randbytes(pkt_len) if data==None else data
         frame = dst_mac + src_mac + eth_type + data_pkt
 
-        return self.preamble + frame + get_crc32(frame)
+        return self.preamble + frame + self.get_crc32(frame)
 
     def get_crc32(self, data):
         return (zlib.crc32(data)).to_bytes(4, 'little')

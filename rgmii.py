@@ -19,7 +19,7 @@ class RgmiiDriver():
     
     async def send_frame(self, frame):
         for byte in frame:
-            await send_byte(byte)
+            await self.send_byte(byte)
         self.data.value = 0
         self.ctl.value = 0
 
